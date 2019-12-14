@@ -105,7 +105,7 @@ const data = [
   {id: 3, title: '3'},
 ]
 
-const normalizedData = simpleNormalizer(data);
+const normalizedData = simpleNormalizer(data, 'myKey');
 console.log(normalizedData);
 
 OUTPUT:
