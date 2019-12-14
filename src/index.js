@@ -1,35 +1,47 @@
-const simpleNormalizer = (nestedData, property = 'children') => {
-  if (!nestedData || nestedData.length === 0) {
-    console.error(`simple-normalizer: cannot read ${nestedData}!`);
-    return null;
+class SimpleNormalizer {
+  constructor(data, property = 'children') {
+    this.data = data;
+    this.result = {};
+    this.property = property;
   }
 
-  if (!Array.isArray(nestedData)) {
-    console.error(`simple-normalizer: type of ${nestedData} should be an array!`);
-    return null;
-  }
-
-  const result = {};
-  _normalize(result, nestedData, property);
-
-  return result;
-}
-
-const _normalize = (res, nestedData, property) => {
-  nestedData.forEach(data => {
-    const deep = data[property];
-    let children = [];
-
-    if (deep && deep.length > 0) {
-      children = deep.map(child => child.id);
-      _normalize(res, deep, property);
+  normalize() {
+    if (!this.data || this.data.length === 0) {
+      console.error(`simple-normalizer: cannot read ${this.data}!`);
+      return null;
     }
 
-    res[data.id] = {
-      ...data,
-      [property]: children,
-    };
-  });
+    if (!Array.isArray(this.data)) {
+      this.data = [this.data];
+    }
+
+    this._recursiveNormalize(this.result, this.data, this.property);
+
+    return this.result;
+  }
+
+  _recursiveNormalize(obj, nestedData) {
+    nestedData.forEach(data => {
+      const propertyArr = this.property.split('.');
+      const lastItem = propertyArr.length - 1;
+
+      const deep = propertyArr.reduce((acc, cur) => {
+        return acc && acc[cur];
+      }, data);
+
+      let children = [];
+
+      if (deep && deep.length > 0) {
+        children = deep.map(child => child.id);
+        this._recursiveNormalize(obj, deep, this.property);
+      }
+
+      obj[data.id] = {
+        ...data,
+        [propertyArr[lastItem]]: children,
+      };
+    });
+  }
 }
 
-export default simpleNormalizer;
+export default SimpleNormalizer;

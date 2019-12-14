@@ -1,6 +1,6 @@
 {
   "name": "simple-normalizer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a simple normalizer for array of deep nested objects",
   "main": "./lib/index.js",
   "scripts": {
