@@ -1,60 +1,55 @@
 class SimpleNormalizer {
-  constructor(data, property = 'children') {
-    this.data = data;
-    this.result = {};
-    this.property = property;
-  }
+  normalize(data, property = 'children') {
+    const result = {};
 
-  normalize() {
-    if (!this.data || this.data.length === 0) {
-      console.error(`simple-normalizer: cannot read ${this.data}!`);
+    if (!data || data.length === 0) {
+      console.error(`simple-normalizer: cannot read ${data}!`);
       return null;
     }
 
-    if (!Array.isArray(this.data)) {
-      this.data = [this.data];
+    if (!Array.isArray(data)) {
+      data = [data];
     }
 
-    if (Array.isArray(this.property)) {
-      this.property.forEach(prop => {
-        this._recursiveNormalize(this.result, this.data, prop);
+    if (Array.isArray(property)) {
+      property.forEach(prop => {
+        _recursiveNormalize(result, data, prop);
       })
     } else {
-      this._recursiveNormalize(this.result, this.data);
+      _recursiveNormalize(result, data, property);
     }
 
-
-    return this.result;
-  }
-
-  _recursiveNormalize(result, data, prop = this.property) {
-    data.forEach(eachData => {
-      let children = [];
-      const propertyArr = prop.split('.');
-      const firstItem = propertyArr[0];
-      const lastItemIndex = propertyArr.length - 1;
-      const deep = this._findDeep(propertyArr, eachData);
-
-      if (deep && deep.length > 0) {
-        children = deep.map(child => child.id);
-        this._recursiveNormalize(result, deep, prop);
-      }
-
-      result[eachData.id] = {
-        ...eachData,
-        ...result[eachData.id],
-        [propertyArr[lastItemIndex]]: children,
-      };
-
-      delete result[eachData.id][firstItem];
-    });
-  }
-
-  _findDeep(propertyArr, data) {
-    return propertyArr.reduce((acc, cur) => {
-      return acc && acc[cur];
-    }, data);
+    return result;
   }
 }
 
-export default SimpleNormalizer;
+const _recursiveNormalize = (result, data, prop) => {
+  data.forEach(eachData => {
+    let children = [];
+    const propertyArr = prop.split('.');
+    const firstItem = propertyArr[0];
+    const lastItemIndex = propertyArr.length - 1;
+    const deep = _findDeep(propertyArr, eachData);
+
+    if (deep && deep.length > 0) {
+      children = deep.map(child => child.id);
+      _recursiveNormalize(result, deep, prop);
+    }
+
+    result[eachData.id] = {
+      ...eachData,
+      ...result[eachData.id],
+      [propertyArr[lastItemIndex]]: children,
+    };
+
+    delete result[eachData.id][firstItem];
+  });
+}
+
+const _findDeep = (propertyArr, data) => {
+  return propertyArr.reduce((acc, cur) => {
+    return acc && acc[cur];
+  }, data);
+}
+
+export default new SimpleNormalizer();
