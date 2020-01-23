@@ -1,6 +1,6 @@
 class SimpleNormalizer {
   normalize(data, property = "children") {
-    const result = {};
+    const normalizedData = {};
 
     if (!data || data.length === 0) {
       console.error(`simple-normalizer: cannot read ${data}!`);
@@ -13,13 +13,13 @@ class SimpleNormalizer {
 
     if (Array.isArray(property)) {
       property.forEach(prop => {
-        _recursiveNormalize(result, data, prop);
+        _recursiveNormalize(normalizedData, data, prop);
       });
     } else {
-      _recursiveNormalize(result, data, property);
+      _recursiveNormalize(normalizedData, data, property);
     }
 
-    return result;
+    return normalizedData;
   }
 
   denormalize(data, property = "children") {
@@ -63,7 +63,7 @@ class SimpleNormalizer {
   }
 }
 
-const _recursiveNormalize = (result, data, prop) => {
+const _recursiveNormalize = (normalizedData, data, prop) => {
   data.forEach(eachData => {
     let children = [];
     const propertyArr = prop.split(".");
@@ -73,16 +73,16 @@ const _recursiveNormalize = (result, data, prop) => {
 
     if (deep && deep.length > 0) {
       children = deep.map(child => child.id);
-      _recursiveNormalize(result, deep, prop);
+      _recursiveNormalize(normalizedData, deep, prop);
     }
 
-    result[eachData.id] = {
+    normalizedData[eachData.id] = {
       ...eachData,
-      ...result[eachData.id],
+      ...normalizedData[eachData.id],
       [propertyArr[lastItemIndex]]: children
     };
 
-    delete result[eachData.id][firstItem];
+    delete normalizedData[eachData.id][firstItem];
   });
 };
 
