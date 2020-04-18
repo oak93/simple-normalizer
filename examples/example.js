@@ -1,17 +1,16 @@
-const simpleNormalizer = require('../lib').default;
+const { normalize } = require("../lib").default;
 
 const nestedDataChildrenKey = [
   {
     id: 1,
-    title:
-      "1",
+    title: "1",
     children: [
       { id: 11, title: "1.1" },
       { id: 12, title: "1.2" },
       { id: 13, title: "1.3" },
       { id: 14, title: "1.4" },
-      { id: 15, title: "1.5" }
-    ]
+      { id: 15, title: "1.5" },
+    ],
   },
   { id: 2, title: "2" },
   { id: 3, title: "3" },
@@ -28,30 +27,29 @@ const nestedDataChildrenKey = [
           { id: 422, title: "4.2.2" },
           { id: 423, title: "4.2.3" },
           { id: 424, title: "4.2.4" },
-          { id: 425, title: "4.2.5" }
-        ]
+          { id: 425, title: "4.2.5" },
+        ],
       },
       { id: 43, title: "4.3" },
       { id: 44, title: "4.4" },
-      { id: 45, title: "4.5" }
-    ]
+      { id: 45, title: "4.5" },
+    ],
   },
   { id: 5, title: "5" },
-  { id: 6, title: "6" }
+  { id: 6, title: "6" },
 ];
 
 const nestedDataWithNestedKey = [
   {
     id: 1,
-    title:
-      "1",
+    title: "1",
     nested: [
       { id: 11, title: "1.1" },
       { id: 12, title: "1.2" },
       { id: 13, title: "1.3" },
       { id: 14, title: "1.4" },
-      { id: 15, title: "1.5" }
-    ]
+      { id: 15, title: "1.5" },
+    ],
   },
   { id: 2, title: "2" },
   { id: 3, title: "3" },
@@ -68,20 +66,19 @@ const nestedDataWithNestedKey = [
           { id: 422, title: "4.2.2" },
           { id: 423, title: "4.2.3" },
           { id: 424, title: "4.2.4" },
-          { id: 425, title: "4.2.5" }
-        ]
+          { id: 425, title: "4.2.5" },
+        ],
       },
       { id: 43, title: "4.3" },
       { id: 44, title: "4.4" },
-      { id: 45, title: "4.5" }
-    ]
+      { id: 45, title: "4.5" },
+    ],
   },
   { id: 5, title: "5" },
-  { id: 6, title: "6" }
+  { id: 6, title: "6" },
 ];
 
-const resultChildrenKey = simpleNormalizer(nestedDataChildrenKey);
-const resultNestedKey = simpleNormalizer(nestedDataWithNestedKey);
+const resultChildrenKey = normalize(nestedDataChildrenKey);
+const resultNestedKey = normalize(nestedDataWithNestedKey);
 
-console.log('resultChildrenKey:', resultChildrenKey);
-console.log('resultNestedKey:', resultNestedKey);
+console.log("resultChildrenKey:", JSON.stringify(resultChildrenKey));
