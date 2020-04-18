@@ -44,8 +44,8 @@ const normalizedDataWithChildren = {
   },
 };
 
-// const resultDataWithChildren = normalize(dataWithChildren);
-// console.log("resultDataWithChildren:", JSON.stringify(resultDataWithChildren));
+const resultDataWithChildren = normalize(dataWithChildren);
+console.log("resultDataWithChildren:", JSON.stringify(resultDataWithChildren));
 
 const resultNormalizedDataWithChildren = denormalize(
   normalizedDataWithChildren
