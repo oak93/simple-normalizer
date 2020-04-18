@@ -1,6 +1,6 @@
 {
   "name": "simple-normalizer",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "a simple normalizer for array of deep nested objects",
   "main": "./lib/index.js",
   "scripts": {
@@ -26,9 +26,9 @@
   "author": "Osman Akar <oakar.elk@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cross-env": "6.0.3",
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "cross-env": "6.0.3"
   }
 }

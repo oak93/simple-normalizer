@@ -1,84 +1,56 @@
-const { normalize } = require("../lib").default;
+const { normalize, denormalize } = require("../lib").default;
 
-const nestedDataChildrenKey = [
-  {
+const dataWithChildren = {
+  id: 1,
+  title: "1",
+  children: [
+    { id: 11, title: "1.1" },
+    {
+      id: 12,
+      title: "1.2",
+      children: [
+        { id: 121, title: "1.2.1" },
+        { id: 122, title: "1.2.2" },
+      ],
+    },
+  ],
+};
+
+const normalizedDataWithChildren = {
+  "1": {
     id: 1,
     title: "1",
-    children: [
-      { id: 11, title: "1.1" },
-      { id: 12, title: "1.2" },
-      { id: 13, title: "1.3" },
-      { id: 14, title: "1.4" },
-      { id: 15, title: "1.5" },
-    ],
+    children: [11, 12],
   },
-  { id: 2, title: "2" },
-  { id: 3, title: "3" },
-  {
-    id: 4,
-    title: "4",
-    children: [
-      { id: 41, title: "4.1" },
-      {
-        id: 42,
-        title: "4.2",
-        children: [
-          { id: 421, title: "4.2.1" },
-          { id: 422, title: "4.2.2" },
-          { id: 423, title: "4.2.3" },
-          { id: 424, title: "4.2.4" },
-          { id: 425, title: "4.2.5" },
-        ],
-      },
-      { id: 43, title: "4.3" },
-      { id: 44, title: "4.4" },
-      { id: 45, title: "4.5" },
-    ],
+  "11": {
+    id: 11,
+    title: "1.1",
+    children: [],
   },
-  { id: 5, title: "5" },
-  { id: 6, title: "6" },
-];
+  "12": {
+    id: 12,
+    title: "1.2",
+    children: [121, 122],
+  },
+  "121": {
+    id: 121,
+    title: "1.2.1",
+    children: [],
+  },
+  "122": {
+    id: 122,
+    title: "1.2.2",
+    children: [],
+  },
+};
 
-const nestedDataWithNestedKey = [
-  {
-    id: 1,
-    title: "1",
-    nested: [
-      { id: 11, title: "1.1" },
-      { id: 12, title: "1.2" },
-      { id: 13, title: "1.3" },
-      { id: 14, title: "1.4" },
-      { id: 15, title: "1.5" },
-    ],
-  },
-  { id: 2, title: "2" },
-  { id: 3, title: "3" },
-  {
-    id: 4,
-    title: "4",
-    nested: [
-      { id: 41, title: "4.1" },
-      {
-        id: 42,
-        title: "4.2",
-        nested: [
-          { id: 421, title: "4.2.1" },
-          { id: 422, title: "4.2.2" },
-          { id: 423, title: "4.2.3" },
-          { id: 424, title: "4.2.4" },
-          { id: 425, title: "4.2.5" },
-        ],
-      },
-      { id: 43, title: "4.3" },
-      { id: 44, title: "4.4" },
-      { id: 45, title: "4.5" },
-    ],
-  },
-  { id: 5, title: "5" },
-  { id: 6, title: "6" },
-];
+// const resultDataWithChildren = normalize(dataWithChildren);
+// console.log("resultDataWithChildren:", JSON.stringify(resultDataWithChildren));
 
-const resultChildrenKey = normalize(nestedDataChildrenKey);
-const resultNestedKey = normalize(nestedDataWithNestedKey);
-
-console.log("resultChildrenKey:", JSON.stringify(resultChildrenKey));
+const resultNormalizedDataWithChildren = denormalize(
+  normalizedDataWithChildren
+);
+console.log(
+  "resultNormalizedDataWithChildren:",
+  JSON.stringify(resultNormalizedDataWithChildren)
+);
